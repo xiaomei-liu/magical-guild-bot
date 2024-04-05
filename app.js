@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
 app.use(helmet());
-app.use(limiter);
+// app.use(limiter);
 
 app.get("/", (req, res) => {
   res.send("Health check");
