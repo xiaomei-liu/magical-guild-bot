@@ -40,10 +40,13 @@ app.post('/interactions', async function (req, res) {
   console.log(type);
   console.log(id);
   console.log(data);
+  console.log(req.header('X-Signature-Ed25519'));
+  console.log(req.header('X-Signature-Timestamp'));
   /**
    * Handle verification requests
    */
   if (type.toString() === InteractionType.PING.toString()) {
+    console.log('ping!!!');
     return res.status(200).send({ type: InteractionResponseType.PONG });
   }
 
