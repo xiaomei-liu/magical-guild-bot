@@ -33,20 +33,19 @@ app.get("/", (req, res) => {
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
   const { type, id, data } = req.body;
-  console.log(type);
-  console.log(data);
+
   /**
    * Handle verification requests
    */
-  if (type === InteractionType.PING) {
-    return res.send({ type: InteractionResponseType.PONG });
+  if (type.toString() === InteractionType.PING.toString()) {
+    return res.status(200).send({ type: InteractionResponseType.PONG });
   }
 
   /**
    * Handle slash command requests
    * See https://discord.com/developers/docs/interactions/application-commands#slash-commands
    */
-  if (type === InteractionType.APPLICATION_COMMAND) {
+  if (type.toString() === InteractionType.APPLICATION_COMMAND.toString()) {
     const { name } = data;
 
     switch (name) {
