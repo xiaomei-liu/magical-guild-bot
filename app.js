@@ -28,12 +28,18 @@ app.get("/", (req, res) => {
   res.send("Health check");
 });
 
+app.get("/interactions", (req, res) => {
+  console.log('/interactions');
+  res.send("/Interactions Health check");
+});
 
 
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
   const { type, id, data } = req.body;
-
+  console.log(type);
+  console.log(id);
+  console.log(data);
   /**
    * Handle verification requests
    */
