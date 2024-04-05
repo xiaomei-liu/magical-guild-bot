@@ -9,7 +9,7 @@ import { InteractionResponseType, InteractionType } from "discord-interactions";
 import { WizardBotCommand } from "./public/javascripts/types.js";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || "3000";
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 20,
