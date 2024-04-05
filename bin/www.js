@@ -3,9 +3,8 @@
 /**
  * Module dependencies.
  */
-const app = require('../app');
-const debug = require('debug')('magical:server');
-const http = require('http');
+import app from "../app.js";
+import http from "http";
 
 /**
  * Get port from environment and store in Express.
@@ -83,5 +82,4 @@ function onListening() {
   const bind = typeof addr === 'string'
       ? 'pipe ' + addr
       : 'port ' + addr.port;
-  debug('Listening on ' + bind);
 }
