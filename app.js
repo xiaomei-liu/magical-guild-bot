@@ -82,12 +82,12 @@ app.post('/interactions', async function (req, res) {
     switch (custom_id) {
       case "host_command_1":
         return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          type: InteractionResponseType.UPDATE_MESSAGE,
           data: {
             content: 'Please fill out the form below to host a run.',
             components: [
               {
-                type: 7,
+                type: 1,
                 components: [
                   HostCommandSelectEventChannel
                 ]
