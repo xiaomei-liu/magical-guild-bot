@@ -29,9 +29,19 @@ app.get("/interactions", (req, res) => {
 
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
-  const { type, id, interaction, data, message } = req.body;
+  const { type, data, message } = req.body;
 
-  console.log(req.body);
+  console.log({
+    data: req.body.data,
+    id: req.body.id,
+    message: {
+      id: req.body.message.id,
+      interaction: req.body.message.interaction,
+      interaction_metadata: req.body.message.interaction_metadata,
+      type: req.body.message.type
+    },
+    type: req.body.type
+  });
   console.log(userSelectedValues);
 
   /**
@@ -47,7 +57,6 @@ app.post('/interactions', async function (req, res) {
    */
   if (type.toString() === InteractionType.APPLICATION_COMMAND.toString()) {
     const { name } = data;
-
     switch (name) {
       case WizardBotCommand.TEST:
         return res.send({
@@ -57,6 +66,7 @@ app.post('/interactions', async function (req, res) {
           },
         });
       case WizardBotCommand.HOST:
+
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
@@ -72,12 +82,13 @@ app.post('/interactions', async function (req, res) {
           }
         })
       default:
-        return res.send({
-
-        })
+        return res.send({})
     }
   }
 
+  /**
+   * Handle message commands
+   */
   if (type.toString() === InteractionType.MESSAGE_COMPONENT.toString()) {
     const { custom_id, values } = data;
     const { interaction } = message;
@@ -86,7 +97,7 @@ app.post('/interactions', async function (req, res) {
       case "host_command_1":
         userSelectedValues[previousMessageId] = values[0]
         return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          type: InteractionResponseType.UPDATE_MESSAGE,
           data: {
             content: 'Please fill out the form below to host a run.',
             components: [
