@@ -35,10 +35,10 @@ app.post('/interactions', async function (req, res) {
     data: req.body.data,
     id: req.body.id,
     message: {
-      id: req.body.message.id,
-      interaction: req.body.message.interaction,
-      interaction_metadata: req.body.message.interaction_metadata,
-      type: req.body.message.type
+      id: req.body.message?.id,
+      interaction: req.body.message?.interaction,
+      interaction_metadata: req.body.message?.interaction_metadata,
+      type: req.body.message?.type
     },
     type: req.body.type
   });
