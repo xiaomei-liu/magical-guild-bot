@@ -29,7 +29,7 @@ app.get("/interactions", (req, res) => {
 
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
-  const { type, id, interaction, data } = req.body;
+  const { type, id, interaction, data, message } = req.body;
 
   console.log(req.body);
   console.log(userSelectedValues);
@@ -80,6 +80,7 @@ app.post('/interactions', async function (req, res) {
 
   if (type.toString() === InteractionType.MESSAGE_COMPONENT.toString()) {
     const { custom_id, values } = data;
+    const { interaction } = message;
     const { id: previousMessageId } = interaction;
     switch (custom_id) {
       case "host_command_1":
