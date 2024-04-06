@@ -29,9 +29,10 @@ app.get("/interactions", (req, res) => {
 
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
-  const { type, id, data } = req.body;
+  const { type, id, interaction, data } = req.body;
 
   console.log(req.body);
+  console.log(userSelectedValues);
 
   /**
    * Handle verification requests
@@ -78,11 +79,13 @@ app.post('/interactions', async function (req, res) {
   }
 
   if (type.toString() === InteractionType.MESSAGE_COMPONENT.toString()) {
-    const { custom_id } = data;
+    const { custom_id, values } = data;
+    const { id: previousMessageId } = interaction;
     switch (custom_id) {
       case "host_command_1":
+        userSelectedValues[previousMessageId] = values[0]
         return res.send({
-          type: InteractionResponseType.UPDATE_MESSAGE,
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: 'Please fill out the form below to host a run.',
             components: [

@@ -18,7 +18,6 @@ export const HostCommandSelectEventType = {
 const channelsList = [...Array(10).keys()].map(channel => ({
     label: `Channel ${channel + 1}`,
     value: `ch${channel + 1}`,
-    description: `Channel ${channel + 1}`
 }))
 export const HostCommandSelectEventChannel = {
     type: 3,
