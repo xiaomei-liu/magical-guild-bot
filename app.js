@@ -1,10 +1,10 @@
 import express from "express";
 import helmet from "helmet";
 import { rateLimit } from "express-rate-limit";
-import { VerifyDiscordRequest } from "./public/javascripts/utils.js";
+import { VerifyDiscordRequest } from "./src/utils.js";
 import { InteractionResponseType, InteractionType } from "discord-interactions";
-import { WizardBotCommand } from "./public/javascripts/types.js";
-import {HostCommandSelectMenu} from "./public/javascripts/constants.js";
+import { WizardBotCommand } from "./src/types.js";
+import {HostCommandSelectMenu} from "./src/constants.js";
 
 const app = express();
 const port = process.env.PORT || "3000";
