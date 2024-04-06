@@ -68,22 +68,19 @@ app.post('/interactions', async function (req, res) {
       case WizardBotCommand.HOST:
         userSelectedValues[id] = []
         return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          type: InteractionResponseType.MODAL,
           data: {
-            content: 'Please fill out the form below to host a run.',
+            // content: 'Please fill out the form below to host a run.',
+            custom_id: "host_event_modal",
+            title: "Hosting a run",
             components: [
               {
                 type: 1,
                 components: [
                   HostCommandSelectEventType,
-                ]
-              },
-              {
-                type: 1,
-                components: [
                   HostCommandSelectEventChannel,
                 ]
-              }
+              },
             ]
           }
         })
