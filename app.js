@@ -30,8 +30,7 @@ app.post('/interactions', async function (req, res) {
   // Interaction type and data
   const { type, id, data } = req.body;
 
-  console.log(type);
-  console.log(data);
+  console.log(req.body);
 
   /**
    * Handle verification requests
@@ -76,6 +75,8 @@ app.post('/interactions', async function (req, res) {
         })
     }
   }
+
+
 });
 
 app.listen(port, () => {
