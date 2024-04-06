@@ -29,7 +29,7 @@ app.get("/interactions", (req, res) => {
 
 app.post('/interactions', async function (req, res) {
   // Interaction type and data
-  const { type, data, message } = req.body;
+  const { type, data, id, message } = req.body;
 
   console.log({
     data: req.body.data,
@@ -66,7 +66,7 @@ app.post('/interactions', async function (req, res) {
           },
         });
       case WizardBotCommand.HOST:
-
+        userSelectedValues[id] = []
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
@@ -75,7 +75,8 @@ app.post('/interactions', async function (req, res) {
               {
                 type: 1,
                 components: [
-                  HostCommandSelectEventType
+                  HostCommandSelectEventType,
+                  HostCommandSelectEventChannel,
                 ]
               }
             ]
@@ -95,7 +96,7 @@ app.post('/interactions', async function (req, res) {
     const { id: previousMessageId } = interaction;
     switch (custom_id) {
       case "host_command_1":
-        userSelectedValues[previousMessageId] = values[0]
+        userSelectedValues[previousMessageId].push(values[0])
         return res.send({
           type: InteractionResponseType.UPDATE_MESSAGE,
           data: {
@@ -104,12 +105,28 @@ app.post('/interactions', async function (req, res) {
               {
                 type: 1,
                 components: [
-                  HostCommandSelectEventChannel
+                  HostCommandSelectEventChannel,
                 ]
               }
             ]
           }
         })
+      // case "host_command_2":
+      //   userSelectedValues[previousMessageId].push(values[0])
+      //   return res.send({
+      //     type: InteractionResponseType.UPDATE_MESSAGE,
+      //     data: {
+      //       content: 'Please fill out the form below to host a run.',
+      //       components: [
+      //         {
+      //           type: 1,
+      //           components: [
+      //             HostCommandSelectEventChannel
+      //           ]
+      //         }
+      //       ]
+      //     }
+      //   })
     }
   }
 

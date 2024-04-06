@@ -25,3 +25,7 @@ export const HostCommandSelectEventChannel = {
     options: channelsList,
     placeholder: "Please choose a channel",
 }
+
+export const HostCommandSelectTime = {
+
+}
