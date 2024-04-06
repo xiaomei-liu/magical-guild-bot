@@ -59,10 +59,10 @@ app.post('/interactions', async function (req, res) {
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: 'Please fill out the form below to host a run.',
-            component: [
+            components: [
               {
                 type: 1,
-                component: [
+                components: [
                   HostCommandSelectMenu
                 ]
               }
