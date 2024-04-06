@@ -7,6 +7,7 @@ import { rateLimit } from "express-rate-limit";
 import { VerifyDiscordRequest } from "./public/javascripts/utils.js";
 import { InteractionResponseType, InteractionType } from "discord-interactions";
 import { WizardBotCommand } from "./public/javascripts/types.js";
+import nacl from "tweetnacl";
 
 const app = express();
 const port = process.env.PORT || "3000";
@@ -16,11 +17,35 @@ const limiter = rateLimit({
 });
 
 // app.use(logger('dev'));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
+// app.use((req, res, next) => {
+//   // Your public key can be found on your application in the Developer Portal
+//   const PUBLIC_KEY = process.env.PUBLIC_KEY;
+//
+//   const signature = req.get("X-Signature-Ed25519");
+//   const timestamp = req.get("X-Signature-Timestamp");
+//   const body = req.body;
+//
+//   console.log(signature);
+//   console.log(timestamp + body);
+//
+//   const isVerified = nacl.sign.detached.verify(
+//       Buffer.from(timestamp + body),
+//       Buffer.from(signature, "hex"),
+//       Buffer.from(PUBLIC_KEY, "hex")
+//   );
+//
+//   console.log(isVerified);
+//
+//   if (!isVerified) {
+//     return res.status(401).end("invalid request signature");
+//   } else {
+//     next()
+//   }
+// })
 app.use(helmet());
 // app.use(limiter);
 
