@@ -4,7 +4,7 @@ import { rateLimit } from "express-rate-limit";
 import { VerifyDiscordRequest } from "./src/utils.js";
 import { InteractionResponseType, InteractionType } from "discord-interactions";
 import { WizardBotCommand } from "./src/types.js";
-import {HostCommandSelectMenu} from "./src/constants.js";
+import {HostCommandSelectEventChannel, HostCommandSelectEventType} from "./src/constants.js";
 
 const app = express();
 const port = process.env.PORT || "3000";
@@ -12,6 +12,7 @@ const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 20,
 });
+const userSelectedValues = [];
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
@@ -63,7 +64,7 @@ app.post('/interactions', async function (req, res) {
               {
                 type: 1,
                 components: [
-                  HostCommandSelectMenu
+                  HostCommandSelectEventType
                 ]
               }
             ]
@@ -76,6 +77,26 @@ app.post('/interactions', async function (req, res) {
     }
   }
 
+  if (type.toString() === InteractionType.MESSAGE_COMPONENT.toString()) {
+    const { custom_id } = data;
+    switch (custom_id) {
+      case "host_command_1":
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Please fill out the form below to host a run.',
+            components: [
+              {
+                type: 7,
+                components: [
+                  HostCommandSelectEventChannel
+                ]
+              }
+            ]
+          }
+        })
+    }
+  }
 
 });
 
