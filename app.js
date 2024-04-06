@@ -76,6 +76,11 @@ app.post('/interactions', async function (req, res) {
                 type: 1,
                 components: [
                   HostCommandSelectEventType,
+                ]
+              },
+              {
+                type: 1,
+                components: [
                   HostCommandSelectEventChannel,
                 ]
               }
